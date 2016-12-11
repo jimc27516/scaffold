@@ -12,7 +12,8 @@ class BookControllerSpec extends Specification {
 
         // TODO: Populate valid properties like...
         //params["name"] = 'someValidName'
-        assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
+        assert params != null
+        params.title = "Title of the Book"
     }
 
     void "Test the index action returns the correct model"() {

@@ -23,4 +23,12 @@ class BookSpec extends Specification {
         !b.validate()
     }
 
+    void "title can't be empty string"() {
+        when: "book created with empty string for title"
+        def b = new Book(title:"")
+
+        then:
+        !b.validate()
+    }
+
 }
