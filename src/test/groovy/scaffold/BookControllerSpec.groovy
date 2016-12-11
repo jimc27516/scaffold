@@ -150,4 +150,9 @@ class BookControllerSpec extends Specification {
             response.redirectedUrl == '/book/index'
             flash.message != null
     }
+
+    void "test that the list method returns the correct format based on format setting"() {
+        when:"format is xml"
+            controller.list
+    }
 }

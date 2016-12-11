@@ -2,6 +2,8 @@ package scaffold
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
+import grails.converters.XML
 
 @Transactional(readOnly = true)
 class BookController {
@@ -12,6 +14,19 @@ class BookController {
         params.max = Math.min(max ?: 10, 100)
         respond Book.list(params), model:[bookCount: Book.count()]
     }
+
+    def list() {
+        def books = Book.list()
+
+        withFormat {
+//            html bookList: books
+            html { render(view: "index", model:books)}
+            json { render books as JSON }
+            xml { render books as XML }
+            '*' { render books as JSON }
+        }
+    }
+
 
     def show(Book book) {
         respond book
