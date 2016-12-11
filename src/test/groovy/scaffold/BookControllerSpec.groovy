@@ -152,7 +152,25 @@ class BookControllerSpec extends Specification {
     }
 
     void "test that the list method returns the correct format based on format setting"() {
+        when: "format is json"
+            response.format = "json"
+            controller.list()
+
+        then:
+            response.text == "[]"
+
         when:"format is xml"
-            controller.list
+            response.reset()
+            response.format="xml"
+            controller.list()
+        then:
+            response.text.take(5) == "<?xml"
+
+        when:"format is html"
+            response.reset()
+            response.format = "html"
+            controller.list()
+        then:
+            view == "/book/index"
     }
 }
