@@ -17,7 +17,7 @@ class BookSpec extends Specification {
 
     void "title can't be null"() {
         when: "book created with no title"
-        def b = new Book()
+        def b = new Book(author: new Author(firstName:"Jim", lastName:"Campbell"))
 
         then:
         !b.validate()
@@ -25,10 +25,17 @@ class BookSpec extends Specification {
 
     void "title can't be empty string"() {
         when: "book created with empty string for title"
-        def b = new Book(title:"")
+        def b = new Book(title:"", author: new Author(firstName:"Jim", lastName:"Campbell"))
 
         then:
         !b.validate()
     }
 
+    void "author can't be empty"() {
+        when:"book created without an author"
+        def b = new Book(title:"test title")
+
+        then:
+        !b.validate()
+    }
 }
