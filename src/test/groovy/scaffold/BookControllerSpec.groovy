@@ -10,10 +10,11 @@ class BookControllerSpec extends Specification {
     def populateValidParams(params) {
         assert params != null
 
-        // TODO: Populate valid properties like...
-        //params["name"] = 'someValidName'
-        assert params != null
+        // make an author
+        def a = new Author(firstName: "Jim", lastName: "Campbell")
+
         params.title = "Title of the Book"
+        params.author = a
     }
 
     void "Test the index action returns the correct model"() {
@@ -55,7 +56,7 @@ class BookControllerSpec extends Specification {
             controller.save(book)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/book/show/1'
+            response.redirectedUrl == '/books/1'
             controller.flash.message != null
             Book.count() == 1
     }
@@ -99,7 +100,7 @@ class BookControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/book/index'
+            response.redirectedUrl == '/books'
             flash.message != null
 
         when:"An invalid domain instance is passed to the update action"
@@ -120,7 +121,7 @@ class BookControllerSpec extends Specification {
 
         then:"A redirect is issued to the show action"
             book != null
-            response.redirectedUrl == "/book/show/$book.id"
+            response.redirectedUrl == "/books/1"
             flash.message != null
     }
 
@@ -131,7 +132,7 @@ class BookControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/book/index'
+            response.redirectedUrl == '/books'
             flash.message != null
 
         when:"A domain instance is created"
@@ -147,7 +148,7 @@ class BookControllerSpec extends Specification {
 
         then:"The instance is deleted"
             Book.count() == 0
-            response.redirectedUrl == '/book/index'
+            response.redirectedUrl == '/books'
             flash.message != null
     }
 

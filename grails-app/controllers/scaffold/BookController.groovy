@@ -19,7 +19,6 @@ class BookController {
         def books = Book.list()
 
         withFormat {
-//            html bookList: books
             html { render(view: "index", model:books)}
             json { render books as JSON }
             xml { render books as XML }
