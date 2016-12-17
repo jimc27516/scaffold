@@ -56,7 +56,7 @@ class AuthorControllerSpec extends Specification {
             controller.save(author)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/author/show/1'
+            response.redirectedUrl == '/authors/1'
             controller.flash.message != null
             Author.count() == 1
     }
@@ -100,7 +100,7 @@ class AuthorControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/author/index'
+            response.redirectedUrl == '/authors'
             flash.message != null
 
         when:"An invalid domain instance is passed to the update action"
@@ -121,7 +121,7 @@ class AuthorControllerSpec extends Specification {
 
         then:"A redirect is issued to the show action"
             author != null
-            response.redirectedUrl == "/author/show/$author.id"
+            response.redirectedUrl == "/authors/$author.id"
             flash.message != null
     }
 
@@ -132,7 +132,7 @@ class AuthorControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/author/index'
+            response.redirectedUrl == '/authors'
             flash.message != null
 
         when:"A domain instance is created"
@@ -148,7 +148,7 @@ class AuthorControllerSpec extends Specification {
 
         then:"The instance is deleted"
             Author.count() == 0
-            response.redirectedUrl == '/author/index'
+            response.redirectedUrl == '/authors'
             flash.message != null
     }
 }
